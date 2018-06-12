@@ -28,7 +28,7 @@ import java.util.regex.Pattern;
 public class UiautomatorTestDriver {
     private static int MAX_WAIT_TIMEOUT = 800;
     private int mTimeOut = 1000 * 6;
-    private UiDevice mUiDevice;
+    public UiDevice mUiDevice;
     private String items = ".*是否允许.*|.*允许.*|.*无响应.*|.*无法访问.*|.*授权.*|.*权限.*|.*位置.*|.*定位.*|.*识别码.*|.*正在尝试.*|"
             + ".*媒体内容.*|.*存储权限.*|.*permission.*|.*其他应用的上层.*";
     private String clickItems = "[确定|OK|允许|.*允许.*|下一步|始终允许|仍然允许|总是允许]{2,4}";
@@ -121,7 +121,7 @@ public class UiautomatorTestDriver {
      * @param direction 滑动方向
      * @param resID     控件resourceId
      * @param text      控件text
-     *                  以上控件的id和text，必填一个
+     *                  以上控件的id和text，必填一个,另一个可以为null
      * @return false 滑动失败
      */
     public boolean successiveSwipe(String direction, String resID, String text) {
@@ -578,20 +578,21 @@ public class UiautomatorTestDriver {
     }
 
     //截图
-    public void Screenshot() {
+    public void Screenshot(File file) {
+        if (!file.exists() && !file.isDirectory()) {
+            file.mkdir();
+        }
         Date date = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String addTime = sdf.format(date);
-        mUiDevice.takeScreenshot(new File("/sdcard/Screenshots/" + addTime + ".png"));
+        mUiDevice.takeScreenshot(new File(file + File.separator + addTime + ".png"));
     }
 
     /**
      * 点击允许权限窗口，已经包含多款手机的不同情况，此方法会自动调用，不需要在测试用例里调用
      */
     public void allowAuthority() {
-
         if (hasObject(By.text(Pattern.compile(items)))) {
-
             String pkgSys = getCurrentPackageName();
             if (pkgSys.equalsIgnoreCase(pkg))
                 return;
