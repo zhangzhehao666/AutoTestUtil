@@ -18,14 +18,14 @@ import android.view.KeyEvent;
 import java.util.List;
 
 public class UiautomatorTestDriver {
-    private int mTimeOut = 1000 * 6;
-    Instrumentation mInstrumentation = InstrumentationRegistry.getInstrumentation();
-    UiDevice mUiDevice = UiDevice.getInstance(mInstrumentation);
+    public static int mTimeOut = 1000 * 6;
+    public static Instrumentation mInstrumentation = InstrumentationRegistry.getInstrumentation();
+    public static UiDevice mUiDevice = UiDevice.getInstance(mInstrumentation);
 
     /**
      * 启动App
      */
-    public void startApp(String packageName) {
+    public static void startApp(String packageName) {
         Context context = InstrumentationRegistry.getInstrumentation().getContext();
         Intent intent = context.getPackageManager().getLaunchIntentForPackage(packageName);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -35,7 +35,7 @@ public class UiautomatorTestDriver {
     /**
      * 上滑
      */
-    public void swipeUp() {
+    public static void swipeUp() {
         int y = mUiDevice.getDisplayHeight();
         int x = mUiDevice.getDisplayWidth();
         mUiDevice.swipe(x / 2, y - 200, x / 2, 200, 20);
@@ -44,7 +44,7 @@ public class UiautomatorTestDriver {
     /**
      * 下滑
      */
-    public void swipeDown() {
+    public static void swipeDown() {
         int y = mUiDevice.getDisplayHeight();
         int x = mUiDevice.getDisplayWidth();
         mUiDevice.swipe(x / 2, 200, x / 2, y - 200, 20);
@@ -53,7 +53,7 @@ public class UiautomatorTestDriver {
     /**
      * 左滑
      */
-    public void swipeLeft() {
+    public static void swipeLeft() {
         int y = mUiDevice.getDisplayHeight();
         int x = mUiDevice.getDisplayWidth();
         mUiDevice.swipe(x - 100, y / 2, 100, y / 2, 20);
@@ -62,7 +62,7 @@ public class UiautomatorTestDriver {
     /**
      * 右滑
      */
-    public void swipeRight() {
+    public static void swipeRight() {
         int y = mUiDevice.getDisplayHeight();
         int x = mUiDevice.getDisplayWidth();
         mUiDevice.swipe(100, y / 2, x - 100, y / 2, 20);
@@ -77,7 +77,7 @@ public class UiautomatorTestDriver {
      *                  以上控件的id和text，必填一个
      * @return false 滑动失败
      */
-    public boolean successiveSwipe(String direction, String resID, String text) {
+    public static boolean successiveSwipe(String direction, String resID, String text) {
         while (true) {
             if (direction.equals(SwipeDirection.UP)) {
                 swipeUp();
@@ -107,7 +107,7 @@ public class UiautomatorTestDriver {
      * @param resId   控件resourceID
      * @param timeout 最长等待时间，单位ms
      */
-    public void waitForResId(String resId, int timeout) {
+    public static void waitForResId(String resId, int timeout) {
         mUiDevice.wait(Until.findObject(By.res(resId)), timeout);
     }
 
@@ -127,7 +127,7 @@ public class UiautomatorTestDriver {
      * @param resId 控件resourceID
      * @return null 不存在此控件
      */
-    public UiObject2 findWidgetByResId(String resId) {
+    public static UiObject2 findWidgetByResId(String resId) {
         try {
             mUiDevice.wait(Until.findObject(By.res(resId)), mTimeOut);
             UiObject2 object2 = mUiDevice.findObject(By.res(resId));
@@ -145,7 +145,7 @@ public class UiautomatorTestDriver {
      * @param resId 控件resourceID
      * @return null 不存在此控件
      */
-    public List<UiObject2> findWidgetsByResId(String resId) {
+    public static List<UiObject2> findWidgetsByResId(String resId) {
         try {
             mUiDevice.wait(Until.findObject(By.res(resId)), mTimeOut);
             return mUiDevice.findObjects(By.res(resId));
@@ -161,7 +161,7 @@ public class UiautomatorTestDriver {
      * @param text 控件文本
      * @return null 不存在此控件
      */
-    public UiObject2 findWidgetByText(String text) {
+    public static UiObject2 findWidgetByText(String text) {
         try {
             mUiDevice.wait(Until.findObject(By.text(text)), mTimeOut);
             return mUiDevice.findObject(By.text(text));
@@ -177,7 +177,7 @@ public class UiautomatorTestDriver {
      * @param text 控件文本
      * @return null 不存在此控件
      */
-    public List<UiObject2> findWidgetsByText(String text) {
+    public static List<UiObject2> findWidgetsByText(String text) {
         try {
             mUiDevice.wait(Until.findObject(By.text(text)), mTimeOut);
             return mUiDevice.findObjects(By.text(text));
@@ -193,7 +193,7 @@ public class UiautomatorTestDriver {
      * @param selector BySelector
      * @return null 不存在此控件
      */
-    public UiObject2 findWidgetBySelector(BySelector selector) {
+    public static UiObject2 findWidgetBySelector(BySelector selector) {
         try {
             mUiDevice.wait(Until.findObject(selector), mTimeOut);
             UiObject2 object2 = mUiDevice.findObject(selector);
@@ -210,7 +210,7 @@ public class UiautomatorTestDriver {
      * @param selector BySelector
      * @return null 不存在此控件
      */
-    public List<UiObject2> findWidgetsBySelector(BySelector selector) {
+    public static List<UiObject2> findWidgetsBySelector(BySelector selector) {
         try {
             mUiDevice.wait(Until.findObject(selector), mTimeOut);
             List<UiObject2> object2List = mUiDevice.findObjects(selector);
@@ -228,7 +228,7 @@ public class UiautomatorTestDriver {
      * @param selector BySelector
      * @return false 不存在此控件
      */
-    public boolean hasObject(BySelector selector) {
+    public static boolean hasObject(BySelector selector) {
         try {
             if (mUiDevice.hasObject(selector)) {
                 return true;
@@ -247,7 +247,7 @@ public class UiautomatorTestDriver {
      * @param y 坐标y
      * @return false 点击失败
      */
-    public boolean clickByPixel(int x, int y) {
+    public static boolean clickByPixel(int x, int y) {
         try {
             mUiDevice.click(x, y);
             return true;
@@ -265,7 +265,7 @@ public class UiautomatorTestDriver {
      * @param index 控件位置（从0开始）
      * @return false 点击失败
      */
-    public boolean clickByResId(String resID, int index) {
+    public static boolean clickByResId(String resID, int index) {
         try {
             mUiDevice.wait(Until.findObject(By.res(resID)), mTimeOut);
             List<UiObject2> object2List = mUiDevice.findObjects(By.res(resID));
@@ -289,7 +289,7 @@ public class UiautomatorTestDriver {
      * @param packageName app包名
      * @return false 点击失败
      */
-    public boolean clickByContainsText(String text, String packageName) {
+    public static boolean clickByContainsText(String text, String packageName) {
         try {
             mUiDevice.wait(Until.findObject(By.textContains(text).pkg(packageName)), mTimeOut);
             UiObject2 object2 = mUiDevice.findObject(By.textContains(text).pkg(packageName));
@@ -311,7 +311,7 @@ public class UiautomatorTestDriver {
      * @param resId       控件resourceId
      * @param millisecond 时间（ms）
      */
-    public void longClickByResourceId(String resId, int millisecond) {
+    public static void longClickByResourceId(String resId, int millisecond) {
         int x = findWidgetByResId(resId).getVisibleCenter().x;
         int y = findWidgetByResId(resId).getVisibleCenter().y;
         mUiDevice.swipe(x, y, x, y, millisecond / 5);
@@ -323,7 +323,7 @@ public class UiautomatorTestDriver {
      * @param text        控件text
      * @param millisecond 时间（ms）
      */
-    public void longClickByText(String text, int millisecond) {
+    public static void longClickByText(String text, int millisecond) {
         int x = findWidgetByText(text).getVisibleCenter().x;
         int y = findWidgetByText(text).getVisibleCenter().y;
         mUiDevice.swipe(x, y, x, y, millisecond / 5);
@@ -336,7 +336,7 @@ public class UiautomatorTestDriver {
      * @param text  输入文本内容
      * @return false 输入失败
      */
-    public boolean inputTextByResId(String resId, String text) {
+    public static boolean inputTextByResId(String resId, String text) {
         try {
             mUiDevice.wait(Until.findObject(By.res(resId)), mTimeOut);
             UiObject2 object2 = mUiDevice.findObject(By.res(resId));
@@ -362,7 +362,7 @@ public class UiautomatorTestDriver {
      * @param toY   目标坐标y
      * @return true 滑动成功
      */
-    public boolean swipeByPixel(int fromX, int fromY, int toX, int toY) {
+    public static boolean swipeByPixel(int fromX, int fromY, int toX, int toY) {
         try {
             return mUiDevice.swipe(fromX, fromY, toX, toY, 20);
         } catch (Exception e) {
@@ -380,7 +380,7 @@ public class UiautomatorTestDriver {
      * @param speed     每s滑动的像素点数量
      * @return true     滑动成功
      */
-    public boolean swipeByResId(String resID, Direction direction, float percent, int speed) {
+    public static boolean swipeByResId(String resID, Direction direction, float percent, int speed) {
         try {
             mUiDevice.wait(Until.findObject(By.res(resID)), mTimeOut);
             UiObject2 object2 = mUiDevice.findObject(By.res(resID));
@@ -403,7 +403,7 @@ public class UiautomatorTestDriver {
      * @param toY   目标坐标y
      * @return true 拖拽成功
      */
-    public boolean dragByPixel(int fromX, int fromY, int toX, int toY) {
+    public static boolean dragByPixel(int fromX, int fromY, int toX, int toY) {
         try {
             return mUiDevice.drag(fromX, fromY, toX, toY, 20);
         } catch (Exception e) {
@@ -420,7 +420,7 @@ public class UiautomatorTestDriver {
      * @param speed 每s滑动的像素点数量
      * @return true 拖拽成功
      */
-    public boolean dragByResId(String resID, Point dest, int speed) {
+    public static boolean dragByResId(String resID, Point dest, int speed) {
         try {
             mUiDevice.wait(Until.findObject(By.res(resID)), mTimeOut);
             UiObject2 object2 = mUiDevice.findObject(By.res(resID));
@@ -437,7 +437,7 @@ public class UiautomatorTestDriver {
     /**
      * 返回
      */
-    public void pressBack() {
+    public static void pressBack() {
         try {
             mUiDevice.pressBack();
             SystemClock.sleep(500);
@@ -449,7 +449,7 @@ public class UiautomatorTestDriver {
     /**
      * 返回到桌面
      */
-    public void pressHome() {
+    public static void pressHome() {
         try {
             mUiDevice.pressHome();
             SystemClock.sleep(1000);
