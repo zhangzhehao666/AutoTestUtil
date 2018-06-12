@@ -6,5 +6,6 @@ allprojects {
 			maven { url 'https://www.jitpack.io' }//这句话必须要加
 		}
 	}
+	
   2、在app的build里
-  androidTestImplementation 'com.android.support.test:rules:1.0.2'
+ 添加依赖：androidTestImplementation 'com.github.zhangzhehao666:Uiautomator:1.2'
