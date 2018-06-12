@@ -8,4 +8,4 @@ allprojects {
 	}
 	
   2、在app的build里
- 添加依赖：androidTestImplementation 'com.github.zhangzhehao666:Uiautomator:1.4'
+ 添加依赖：androidTestImplementation 'com.github.zhangzhehao666:Uiautomator:1.5'
