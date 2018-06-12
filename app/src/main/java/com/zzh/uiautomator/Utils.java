@@ -5,6 +5,9 @@ import android.content.Context;
 import android.os.PowerManager;
 import android.os.SystemClock;
 import android.support.test.InstrumentationRegistry;
+import android.support.test.uiautomator.UiDevice;
+
+import static java.lang.Thread.sleep;
 
 public class Utils {
     public static PowerManager.WakeLock wakeLock;

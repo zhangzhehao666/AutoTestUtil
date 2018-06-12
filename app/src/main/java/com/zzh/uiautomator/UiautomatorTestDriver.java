@@ -16,6 +16,9 @@ import android.support.test.uiautomator.UiObject2;
 import android.support.test.uiautomator.Until;
 import android.view.KeyEvent;
 
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -54,6 +57,7 @@ public class UiautomatorTestDriver {
             e.printStackTrace();
         }
     }
+
     /**
      * 初始化测试，在@BeforeClass函数中调用
      */
@@ -74,6 +78,7 @@ public class UiautomatorTestDriver {
         }
         Utils.wakeLock.release();
     }
+
     /**
      * 上滑
      */
@@ -401,6 +406,37 @@ public class UiautomatorTestDriver {
     }
 
     /**
+     * 对于一个按键按多次
+     *
+     * @param keyCode 按键
+     * @param num     次数
+     */
+    public void pressTimes(int keyCode, int num) {
+        for (int i = 0; i < num; i++) {
+            try {
+                Thread.sleep(200);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            mUiDevice.pressKeyCode(keyCode);
+        }
+    }
+
+    /**
+     * 清除中文文本
+     *
+     * @param resId 控件resourceId
+     */
+    public void clearTextByResourceId(String resId) {
+        String name = findWidgetByResId(resId).getText();
+        mUiDevice.pressKeyCode(KeyEvent.KEYCODE_MOVE_END);
+        //如果光标在最后
+        pressTimes(KeyEvent.KEYCODE_DEL, name.length());
+        //如果光标在最开始
+        // pressTimes(KeyEvent.KEYCODE_FORWARD_DEL, name.length());
+    }
+
+    /**
      * 往控件里输入文本
      *
      * @param resId 控件resourceId
@@ -539,6 +575,14 @@ public class UiautomatorTestDriver {
         if (s == null)
             s = "";
         return s;
+    }
+
+    //截图
+    public void Screenshot() {
+        Date date = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String addTime = sdf.format(date);
+        mUiDevice.takeScreenshot(new File("/sdcard/Screenshots/" + addTime + ".png"));
     }
 
     /**

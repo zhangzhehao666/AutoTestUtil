@@ -13,7 +13,6 @@ public class AuthorityDialogMonitorForUiautomator implements Runnable {
         if (authorityDialogMonitor == null) {
             authorityDialogMonitor = new AuthorityDialogMonitorForUiautomator(util);
         }
-
         return authorityDialogMonitor;
     }
 
