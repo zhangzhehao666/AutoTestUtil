@@ -17,6 +17,7 @@ import android.support.test.uiautomator.Until;
 import android.view.KeyEvent;
 
 import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -59,6 +60,20 @@ public class UiautomatorTestDriver {
     }
 
     /**
+     * 关闭App
+     */
+    public void stopApp() {
+        try {
+            Thread.sleep(500);
+            Runtime.getRuntime().exec("am force-stop " + pkg).waitFor();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
      * 初始化测试，在@BeforeClass函数中调用
      */
     public void startTest() {
@@ -76,6 +91,7 @@ public class UiautomatorTestDriver {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        stopApp();
         Utils.wakeLock.release();
     }
 
