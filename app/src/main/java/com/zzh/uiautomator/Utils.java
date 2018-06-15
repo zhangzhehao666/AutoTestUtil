@@ -7,6 +7,7 @@ import android.os.SystemClock;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.uiautomator.UiDevice;
 
+import static android.content.Context.KEYGUARD_SERVICE;
 import static java.lang.Thread.sleep;
 
 public class Utils {
@@ -14,7 +15,7 @@ public class Utils {
 
     // 唤醒屏幕解锁
     public static void wakeAndUnlock(Context context) {
-        KeyguardManager km = (KeyguardManager) context.getSystemService(Context.KEYGUARD_SERVICE);
+        KeyguardManager km = (KeyguardManager) context.getSystemService(KEYGUARD_SERVICE);
         KeyguardManager.KeyguardLock kl = km.newKeyguardLock("unLock");
         // 获取电源管理器对象
         PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
@@ -46,7 +47,7 @@ public class Utils {
         KeyguardManager km;
         KeyguardManager.KeyguardLock kl;
         Context context = InstrumentationRegistry.getTargetContext();
-        km = (KeyguardManager) context.getSystemService(Context.KEYGUARD_SERVICE);
+        km = (KeyguardManager) context.getSystemService(KEYGUARD_SERVICE);
         kl = km.newKeyguardLock("unLock");
 
         //解锁
@@ -59,7 +60,7 @@ public class Utils {
     public static boolean isUnlockFail() {
         KeyguardManager km;
         Context context = InstrumentationRegistry.getTargetContext();
-        km = (KeyguardManager) context.getSystemService(Context.KEYGUARD_SERVICE);
+        km = (KeyguardManager) context.getSystemService(KEYGUARD_SERVICE);
         if (km.isKeyguardLocked()) {
             return true;
         }
