@@ -1,4 +1,4 @@
-# Uiautomator
+# 包含Uiautomator、appium的封装方法
 使用方法：
 1、在project中的build里
 allprojects {
